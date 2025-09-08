@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Тест знаний</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 30px auto;
+      background: #f9f9f9;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1 { text-align: center; }
+    .question { margin-bottom: 20px; }
+    button {
+      margin-top: 15px;
+      padding: 10px 15px;
+      border: none;
+      background: #4CAF50;
+      color: white;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover { background: #45a049; }
+    #result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>Тест знаний</h1>
+  <form id="quizForm"></form>
+  <button onclick="checkAnswers()">Проверить</button>
+  <div id="result"></div>
+
+  <script>
+    // Массив вопросов
+    const questions = [
+      {
+        text: "Какая столица Франции?",
+        options: ["Берлин", "Париж", "Мадрид"],
+        correct: 1
+      },
+      {
+        text: "Сколько будет 2 + 2?",
+        options: ["3", "4", "5"],
+        correct: 1
+      },
+      {
+        text: "Как называется язык для веб-страниц?",
+        options: ["HTML", "Python", "Java"],
+        correct: 0
+      }
+    ];
+
+    // Генерация вопросов на странице
+    const quizForm = document.getElementById("quizForm");
+    questions.forEach((q, i) => {
+      const div = document.createElement("div");
+      div.classList.add("question");
+      div.innerHTML = `<p>${i + 1}. ${q.text}</p>`;
+      q.options.forEach((opt, j) => {
+        div.innerHTML += `
+          <label>
+            <input type="radio" name="q${i}" value="${j}">
+            ${opt}
+          </label><br>`;
+      });
+      quizForm.appendChild(div);
+    });
+
+    // Проверка ответов
+    function checkAnswers() {
+      let score = 0;
+      questions.forEach((q, i) => {
+        const answer = document.querySelector(`input[name="q${i}"]:checked`);
+        if (answer && parseInt(answer.value) === q.correct) {
+          score++;
+        }
+      });
+      document.getElementById("result").textContent =
+        `Ваш результат: ${score} из ${questions.length}`;
+    }
+  </script>
+</body>
+</html>
