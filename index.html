@@ -256,20 +256,20 @@
       const q = questions[current];
       elQNumber.textContent = `Вопрос номер ${current + 1}:`;
       elQText.textContent = q.text;
-      elQText.classList.remove('q-hint');
       elAns.innerHTML = '';
-
+    
       q.options.forEach((opt, idx) => {
         const btn = document.createElement('button');
         btn.className = 'btn';
         btn.type = 'button';
-        btn.textContent = `ответ ${idx + 1}`;
-        btn.setAttribute('data-label', opt);
+        btn.textContent = opt;  // <-- теперь выводится текст из options
         btn.addEventListener('click', () => handleAnswer(idx));
         elAns.appendChild(btn);
       });
+    
       elResult.textContent = '';
     }
+
 
     function handleAnswer(idx) {
       const q = questions[current];
